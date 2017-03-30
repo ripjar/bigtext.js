@@ -85,23 +85,23 @@ HTMLElement.prototype.bigText = function(options){
 		textAlign: "center",
 		whiteSpace: "nowrap"
 	};
-	
+
 	//Merge provided options and default options
 	options = options || {};
 	for (var opt in defaultOptions)
 		if (defaultOptions.hasOwnProperty(opt) && !options.hasOwnProperty(opt))
 			options[opt] = defaultOptions[opt];
-	
+
 	//Get variables which we will reference frequently
 	var style = this.style;
 	var computedStyle = document.defaultView.getComputedStyle(this);
 	var parent = this.parentNode;
 	var parentStyle = parent.style;
 	var parentComputedStyle = document.defaultView.getComputedStyle(parent);
-	
+
 	//hides the element to prevent "flashing"
 	style.visibility = "hidden";
-	
+
 	//Set some properties
 	style.display = "inline-block";
 	style.clear = "both";
@@ -110,7 +110,7 @@ HTMLElement.prototype.bigText = function(options){
 	style.lineHeight = "1000px";
 	style.whiteSpace = options.whiteSpace;
 	style.textAlign = options.textAlign;
-	style.position = "relative";
+	style.position = "absolute";
 	style.padding = 0;
 	style.margin = 0;
 	style.left = "50%";
@@ -134,13 +134,13 @@ HTMLElement.prototype.bigText = function(options){
 	var parentInnerDimensions = _calculateInnerDimensions(parentComputedStyle);
 	var parentInnerWidth = parentInnerDimensions["width"];
 	var parentInnerHeight = parentInnerDimensions["height"];
-	
+
 	var box = {
 		width: this.offsetWidth, //Note: This is slightly larger than the jQuery version
 		height: this.offsetHeight,
 	};
 
-	
+
 	if (options.rotateText !== null) {
 		if (typeof options.rotateText !== "number")
 			throw "bigText error: rotateText value must be a number";
@@ -156,7 +156,7 @@ HTMLElement.prototype.bigText = function(options){
 		box.width = this.offsetWidth * cosine + this.offsetHeight * sine;
 		box.height = this.offsetWidth * sine + this.offsetHeight * cosine;
 	}
-	
+
 	var widthFactor = (parentInnerWidth - parentPadding.left - parentPadding.right) / box.width;
 	var heightFactor = (parentInnerHeight - parentPadding.top - parentPadding.bottom) / box.height;
 	var lineHeight;
